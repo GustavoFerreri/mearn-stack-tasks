@@ -1,0 +1,13 @@
+// Esta linea arroja un error para corregirlo corremos la siguiente linea en la terminal
+// npm install -D @babel/core @babel/plugin-proposal-class-properties @babel/preset-env @babel/preset-react babel-loader
+// {
+//     "presets": ["env", "react"]
+// }
+// Luego colocamos los presets de esta manera, con eso corre correctamente el npm run webpack
+
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ]
+}
