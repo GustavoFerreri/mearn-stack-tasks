@@ -1,3 +1,4 @@
+import { transformFromAst } from 'babel-core';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
@@ -22,9 +23,20 @@ class App extends Component {
             }
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            M.toast({html: 'Task Saved'});
+            this.setState({title: '', description: ''});
+        })
         .catch(err => console.error(err));
         e.preventDefault();
+    }
+    componentDidMount() {
+        this.fetchTasks();
+    }
+    fetchTasks() {
+        fetch('/api/tasks')
+            .then(res => res.json())
+            .then(data => console.log(data));
     }
     handleChange(e) {
         const { name, value } = e.target;
@@ -50,12 +62,12 @@ class App extends Component {
                                     <form onSubmit={this.addTask}>
                                         <div className="row">
                                             <div className="input-field col s12">
-                                                <input name="title" onChange={this.handleChange} type="text" placeholder="Task Title" />
+                                                <input name="title" onChange={this.handleChange} type="text" placeholder="Task Title" value={this.state.title}/>
                                             </div>
                                         </div>
                                         <div className="row">
                                             <div className="input-field col s12">
-                                                <textarea name="description" onChange={this.handleChange} className="materialize-textarea" placeholder="Task Description"/>
+                                                <textarea name="description" onChange={this.handleChange} className="materialize-textarea" placeholder="Task Description" value={this.state.description}/>
                                             </div>
                                         </div>
                                         <button type="submit" className="btn light-blue darken-4">Send</button>
